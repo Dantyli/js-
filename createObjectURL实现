@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>图片预览</title>
+	</head>
+	<style>
+		.img img {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+	<body> 
+		<input type="file" class="upload" value="上传" />
+		<div class="img" style="width: 300px;height: 300px;"></div>
+	</body>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script>
+	window.onload=function(){
+		$('.upload').on('change input',function(){
+			var the = this;
+
+			function imgReady(img) {
+				var i = $(img); //var cut=the.siblings('input[type=text]').attr('cutsize').split(',');   
+				if (i.width() > 1000 || i.height() > 800) {
+					alert('图片过大');
+					return false;
+				}
+			}
+			if (this.value) {
+				var img = new Image();
+				img.style.position = 'absolute';
+				//img.style.visibility='hidden';                
+				var getUrl = function(blob) {
+					return window[window.webkitURL ? 'webkitURL' : 'URL']['createObjectURL'](blob);
+				};
+				if (!/(gif)|(jpeg)|(jpg)|(bmp)|(png)$/.test(this.value.toLowerCase())) {
+					alert('图片格式错误');
+					this.value = '';
+					return false;
+				}
+				img.src = getUrl(this.files[0]);
+				$('.img').append(img);
+				img.onload = function() {
+					imgReady(img);
+				}
+			}
+		})
+	}
+	</script>
+
+</html>
