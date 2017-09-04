@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>图片预览</title>
+	</head>
+	<style>
+		.img img {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+	<body> <input type="file" class="upload" value="上传" />
+		<div class="img" style="width: 300px;height: 300px;"></div>
+	</body>
+	<script src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.min.js"></script>
+	<script>
+		//filereader H5特性,Safari,Opera不支持,ie10以下不支持	   
+		var imgs = document.getElementsByClassName('upload')[0];
+		imgs.onchange = function() {
+			var oFReader = new FileReader();
+			oFReader.readAsDataURL(this.files[0]);
+			oFReader.onload = function(oFREvent) {
+				var img = new Image();
+				img.src = oFREvent.target.result;
+				$('.img').append(img);
+			};
+      
+			//var obj = new FormData();异步上传图片方法      
+			//obj.append('file',$('.upload')[0].files[0]);        
+			//obj.append('name','file');      
+		}
+	</script>
+
+</html>
